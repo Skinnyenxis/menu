@@ -4,7 +4,6 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Меню — Ассорти</title>
-
   <style>
     body {
       margin: 0;
@@ -41,6 +40,56 @@
     .menu-card h3 {
       margin: 0 0 10px;
       color: #ffd98e;
+    }
+
+    /* Готовые ассорти */
+    .assorti-ready {
+      margin: 30px;
+    }
+
+    .assorti-ready h2 {
+      text-align: center;
+      color: #ffd98e;
+    }
+
+    .assorti-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 15px;
+      padding: 20px;
+    }
+
+    .assorti-grid img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      border-radius: 10px;
+      border: 1px solid #8b6f27;
+    }
+
+    /* Галерея */
+    .gallery {
+      margin: 30px;
+    }
+
+    .gallery h2 {
+      text-align: center;
+      color: #ffd98e;
+    }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 12px;
+      padding: 20px;
+    }
+
+    .gallery-grid img {
+      width: 100%;
+      height: 160px;
+      object-fit: cover;
+      border-radius: 10px;
+      border: 1px solid #8b6f27;
     }
 
     .bron {
@@ -102,9 +151,7 @@
 
   <header>Меню Ассорти</header>
 
-  <!-- МЕНЮ -->
   <section class="menu-section">
-
     <div class="menu-card">
       <h3>Рулеты</h3>
       <p>Куриные рулеты</p>
@@ -118,14 +165,43 @@
       <p>Говяжьи котлеты</p>
       <p>Ассорти котлет</p>
     </div>
-
+  
     <div class="menu-card">
+      <h3>готовые ассорти</h3>
+      <p>рыбное ассорти (дракон)</p>
+      <p>куринное ассорти (байтерек)</p>
+      <p>куринные и мясные нарезки (традиционные)</p>
+    </div>
+
+     <div class="menu-card">
       <h3>Прочее</h3>
       <p>Повар на выезд</p>
       <p>Приготовление ассорти</p>
       <p>Выезд на приготовление блюд</p>
     </div>
+    
+  </section>
 
+  <!-- ГАЛЕРЕЯ НА 15 ФОТО -->
+  <section class="gallery">
+    <h2>Галерея</h2>
+    <div class="gallery-grid">
+      <img src="img/g1.jpg">
+      <img src="img/g2.jpg">
+      <img src="img/g3.jpg">
+      <img src="img/g4.jpg">
+      <img src="img/g5.jpg">
+      <img src="img/g6.jpg">
+      <img src="img/g7.jpg">
+      <img src="img/g8.jpg">
+      <img src="img/g9.jpg">
+      <img src="img/g10.jpg">
+      <img src="img/g11.jpg">
+      <img src="img/g12.jpg">
+      <img src="img/g13.jpg">
+      <img src="img/g14.jpg">
+      <img src="img/g15.jpg">
+    </div>
   </section>
 
   <!-- БРОНИРОВАНИЕ -->
@@ -156,14 +232,9 @@
       let date = document.getElementById('date').value;
       let time = document.getElementById('time').value;
 
-      let text = `Здравствуйте! Хотели заказать у вас:
-Тип заказа: ${type}
-Тип ассорти: ${assorti}
-Количество гостей: ${guests}
-Дата: ${date}
-Время: ${time}`;
+      let text = `Здравствуйте! Хотели заказать у вас:\nТип заказа: ${type}\nТип ассорти: ${assorti}\nКоличество гостей: ${guests}\nДата: ${date}\nВремя: ${time}`;
 
-      let url = `https://wa.me/77066399442?text=${encodeURIComponent(text)}`;
+      let url = `https://wa.me/77069639442?text=${encodeURIComponent(text)}`;
       window.open(url, '_blank');
     }
   </script>
