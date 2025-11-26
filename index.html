@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Меню — Ассорти</title>
+
   <style>
     body {
       margin: 0;
@@ -71,6 +72,11 @@
       border-radius: 10px;
       font-size: 18px;
       font-weight: bold;
+      cursor: pointer;
+    }
+
+    .bron button:hover {
+      background: #d9b25a;
     }
 
     @media(max-width: 900px) {
@@ -93,9 +99,12 @@
   </style>
 </head>
 <body>
+
   <header>Меню Ассорти</header>
 
+  <!-- МЕНЮ -->
   <section class="menu-section">
+
     <div class="menu-card">
       <h3>Рулеты</h3>
       <p>Куриные рулеты</p>
@@ -116,18 +125,22 @@
       <p>Приготовление ассорти</p>
       <p>Выезд на приготовление блюд</p>
     </div>
+
   </section>
 
+  <!-- БРОНИРОВАНИЕ -->
   <div class="bron">
     <h2 style="text-align:center;color:#ffd98e;">Бронирование</h2>
 
     <select id="orderType">
       <option value="Ассорти">Ассорти</option>
+      <option value="Рулеты">Рулеты</option>
+      <option value="Котлеты">Котлеты</option>
       <option value="Выезд повара">Выезд повара</option>
       <option value="Приготовление блюд">Приготовление блюд</option>
     </select>
 
-    <input type="text" id="assorti" placeholder="тип ассорти" />
+    <input type="text" id="assorti" placeholder="Тип ассорти (если нужно)" />
     <input type="number" id="guests" placeholder="Количество гостей" />
     <input type="date" id="date" />
     <input type="time" id="time" />
@@ -138,14 +151,20 @@
   <script>
     function sendWA() {
       let type = document.getElementById('orderType').value;
+      let assorti = document.getElementById('assorti').value;
       let guests = document.getElementById('guests').value;
       let date = document.getElementById('date').value;
       let time = document.getElementById('time').value;
 
-      let text = Здравствуйте! Хотели заказать у вас \nТип заказа: ${type}\nКоличество гостей: ${guests}\nДата: ${date}\nВремя: ${time};
+      let text = `Здравствуйте! Хотели заказать у вас:
+Тип заказа: ${type}
+Тип ассорти: ${assorti}
+Количество гостей: ${guests}
+Дата: ${date}
+Время: ${time}`;
 
-      let url = https://wa.me/77069639442?text=${encodeURIComponent(text)};
-      window.open(url = https://wa.me/77069639442?text=${encodeURIComponent(text)}, '_blank');
+      let url = `https://wa.me/77069639442?text=${encodeURIComponent(text)}`;
+      window.open(url, '_blank');
     }
   </script>
 
