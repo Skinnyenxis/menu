@@ -10,303 +10,316 @@
       margin: 0;
       font-family: Arial, sans-serif;
       background: #0d0d0d;
+      color: #f0d08a;
+    }
+
+    h1 {
+      text-align: center;
+      padding: 20px;
       color: #e5c67b;
+      font-size: 32px;
+      animation: fadeIn 1s ease;
     }
 
-    header {
-      text-align: center;
-      padding: 20px;
-      font-size: 28px;
-      font-weight: bold;
-      color: #f1d78a;
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
-    .menu-section {
-      padding: 20px;
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 20px;
+    .category {
+      margin: 25px 0;
+      padding: 0 15px;
+      animation: fadeIn 0.8s ease;
     }
 
-    .menu-card {
-      background: #1a1a1a;
-      border: 1px solid #8b6f27;
-      border-radius: 12px;
+    .category-title {
+      font-size: 26px;
+      color: #d4b46c;
+      margin-bottom: 15px;
+      border-left: 4px solid #d4b46c;
+      padding-left: 10px;
+    }
+
+    .item {
+      background: #151515;
+      border: 1px solid #2a2a2a;
       padding: 15px;
-      text-align: center;
-      color: #f6e6b3;
-      font-size: 18px;
-      transition: transform 0.3s ease-out;
-    }
-
-    .menu-card:hover {
-      transform: translateY(-3px);
-    }
-
-    .menu-card h3 {
-      margin: 0 0 10px;
-      color: #ffd98e;
-    }
-
-    /* Ассорти */
-    .assorti-ready {
-      margin: 30px;
-    }
-
-    .assorti-ready h2 {
-      text-align: center;
-      color: #ffd98e;
-    }
-
-    .assorti-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      border-radius: 12px;
+      margin-bottom: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
       gap: 15px;
-      padding: 20px;
+      transition: transform 0.25s ease, background 0.25s ease, box-shadow 0.25s ease;
     }
 
-    .assorti-grid img,
-    .gallery-grid img {
-      width: 100%;
-      height: 200px;
+    .item:hover {
+      transform: translateY(-4px);
+      background: #1c1c1c;
+      box-shadow: 0 4px 12px rgba(255, 215, 130, 0.12);
+    }
+
+    .item img {
+      width: 110px;
+      height: 110px;
       object-fit: cover;
       border-radius: 10px;
-      border: 1px solid #8b6f27;
-      transition: transform 0.4s ease-out;
-      cursor: pointer;
+      border: 2px solid #947a3f;
+      transition: transform 0.3s ease;
     }
 
-    .gallery-grid img:hover {
+    .item:hover img {
       transform: scale(1.05);
     }
 
-    /* Галерея */
-    .gallery {
-      margin: 30px;
+    .item-info {
+      flex: 1;
     }
 
-    .gallery h2 {
-      text-align: center;
-      color: #ffd98e;
+    .item-title {
+      font-size: 20px;
+      margin-bottom: 5px;
+      color: #e5c67b;
     }
 
-    .gallery-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-      gap: 12px;
-      padding: 20px;
+    .item-price {
+      font-size: 18px;
+      color: #c7a35a;
     }
 
-    /* Lightbox */
-    #lightbox {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.9);
-      justify-content: center;
-      align-items: center;
-      z-index: 9999;
-    }
-
-    #lightbox img {
-      max-width: 95%;
-      max-height: 95%;
-      border-radius: 10px;
-    }
-
-    #lightbox:active {
-      display: none;
-    }
-
-    /* Бронирование */
+    /* БРОНИРОВАНИЕ */
     .bron {
-      margin: 30px auto;
-      max-width: 400px;
+      margin: 35px auto;
+      max-width: 420px;
       padding: 20px;
       background: #1a1a1a;
       border: 1px solid #8b6f27;
-      border-radius: 12px;
+      border-radius: 14px;
+      animation: fadeIn 1s ease;
+      box-shadow: 0 0 15px rgba(255, 215, 130, 0.12);
+    }
+
+    .bron h2 {
+      text-align: center;
+      color: #ffd98e;
+      margin-bottom: 10px;
     }
 
     .bron input,
     .bron select {
       width: 100%;
-      padding: 10px;
+      padding: 12px;
       margin-top: 10px;
-      border-radius: 8px;
+      border-radius: 10px;
       border: 1px solid #8b6f27;
       background: #0d0d0d;
       color: #f1d78a;
-      transition: border-color 0.3s;
+      transition: border 0.3s ease, background 0.3s ease;
     }
 
     .bron input:focus,
     .bron select:focus {
-      outline: none;
       border-color: #ffd98e;
+      background: #141414;
+      outline: none;
     }
 
     .bron button {
       width: 100%;
       margin-top: 15px;
-      padding: 12px;
-      background: #b89440;
+      padding: 14px;
+      background: #c8a04d;
       color: #000;
       border: none;
-      border-radius: 10px;
+      border-radius: 12px;
       font-size: 18px;
       font-weight: bold;
       cursor: pointer;
-      transition: background 0.3s, transform 0.1s;
+      transition: background 0.3s ease, transform 0.15s ease;
     }
 
     .bron button:hover {
-      background: #d9b25a;
+      background: #e6c26c;
     }
 
     .bron button:active {
-      transform: scale(0.99);
+      transform: scale(0.97);
     }
 
-    @media(max-width: 900px) {
-      .menu-section {
-        grid-template-columns: repeat(2, 1fr);
+    /* АДАПТАЦИЯ ДЛЯ ТЕЛЕФОНОВ */
+    @media (max-width: 600px) {
+      .item {
+        flex-direction: column;
+        text-align: center;
       }
-    }
-
-    @media(max-width: 600px) {
-      .menu-section {
-        grid-template-columns: 1fr;
+      .item img {
+        width: 100%;
+        height: 210px;
       }
-      header {
+      h1 {
+        font-size: 26px;
+      }
+      .category-title {
         font-size: 22px;
       }
-      .menu-card {
-        font-size: 16px;
-      }
-      .gallery-grid img {
-        height: 150px;
-      }
     }
-
   </style>
 </head>
-
 <body>
 
-  <header>Меню Ассорти</header>
+<h1>Меню</h1>
 
-  <section class="menu-section">
-    <div class="menu-card">
-      <h3>Рулеты</h3>
-      <p>Куриные рулеты  2800</p>
-      <p>Мясные микс рулеты   3000</p>
-      <p>Фирменные рулеты</p>
+<!-- ====== Котлеты ====== -->
+<div class="category">
+  <div class="category-title">Котлеты</div>
+
+  <div class="item">
+    <div class="item-info">
+      <div class="item-title">Котлета мясная</div>
+      <div class="item-price">220 ₸</div>
     </div>
-
-    <div class="menu-card">
-      <h3>холодные закуски</h3>
-      <p>котлеты мясные   220</p>
-      <p>долма    200</p>
-      <p>дунганский перец   8000/кг</p>
-    </div>
-
-    <div class="menu-card">
-      <h3>Готовые ассорти</h3>
-      <p>закуска из рыбы (дракон)   12000</p>
-      <p>мясное ассорти (байтерек)   12000</p>
-      <p>хололдное ассорти    3800</p>
-      <p>Куриное ассорти    4000</p>
-    </div>
-
-    <div class="menu-card">
-      <h3>Прочее</h3>
-      <p>Повар на выезд</p>
-      <p>Приготовление ассорти</p>
-      <p>Выезд на приготовление блюд</p>
-    </div>
-  </section>
-
-  <section class="gallery">
-    <h2>Галерея</h2>
-    <div class="gallery-grid">
-      <img src="pics/WhatsApp Image 2025-11-26 at 14.36.55.jpeg">
-      <img src="pics/WhatsApp Image 2025-11-26 at 14.35.23.jpeg">
-      <img src="pics/WhatsApp Image 2025-11-26 at 14.35.22.jpeg">
-      <img src="pics/WhatsApp Image 2025-11-26 at 14.35.19.jpeg">
-      <img src="pics/WhatsApp Image 2025-11-26 at 14.35.18.jpeg">
-      <img src="pics/WhatsApp Image 2025-11-26 at 14.35.17.jpeg">
-      <img src="pics/WhatsApp Image 2025-11-26 at 14.35.14.jpeg">
-      <img src="pics/WhatsApp Image 2025-11-26 at 14.37.09.jpeg">
-    </div>
-  </section>
-
-  <!-- Лайтбокс -->
-  <div id="lightbox">
-    <img src="">
+    <img src="img/kotleta-kur.jpg" alt="">
   </div>
 
-  <div class="bron">
-    <h2 style="text-align:center;color:#ffd98e;">Бронирование</h2>
+  <div class="item">
+    <div class="item-info">
+      <div class="item-title">Котлета с хлопьями</div>
+      <div class="item-price">190 ₸</div>
+    </div>
+    <img src="img/kotleta-gov.jpg" alt="">
+  </div>
+</div>
 
-    <select id="orderType">
-      <option value="" disabled selected hidden>Выберите тип заказа</option>
-      <option value="Ассорти">Ассорти</option>
-      <option value="Рулеты">Рулеты</option>
-      <option value="Котлеты">Котлеты</option>
-      <option value="Выезд повара">Выезд повара</option>
-      <option value="Приготовление блюд">Приготовление блюд</option>
-    </select>
+<!-- ====== Рулеты ====== -->
+<div class="category">
+  <div class="category-title">Рулеты</div>
 
-    <input type="text" id="assorti" placeholder="Тип ассорти (если нужно)" />
-    <input type="number" id="guests" placeholder="Количество гостей" />
-    <input type="date" id="date" />
-    <input type="time" id="time" />
-
-    <button onclick="sendWA()">Забронировать</button>
+  <div class="item">
+    <div class="item-info">
+      <div class="item-title">Рулет куриный</div>
+      <div class="item-price">2800 ₸</div>
+    </div>
+    <img src="img/rulet-kur.jpg" alt="">
   </div>
 
-  <script>
-    // WhatsApp
-    function sendWA() {
-      let type = document.getElementById('orderType').value;
-      let assorti = document.getElementById('assorti').value;
-      let guests = document.getElementById('guests').value;
-      let date = document.getElementById('date').value;
-      let time = document.getElementById('time').value;
+  <div class="item">
+    <div class="item-info">
+      <div class="item-title">Рулет микс</div>
+      <div class="item-price">3000 ₸</div>
+    </div>
+    <img src="img/rulet-grib.jpg" alt="">
+  </div>
+</div>
 
-      if (!type || !date) {
-        alert("Пожалуйста, выберите тип заказа и дату!");
-        return;
-      }
+<!-- ====== Холодные закуски ====== -->
+<div class="category">
+  <div class="category-title">Холодные закуски</div>
 
-      let text =
-        `Здравствуйте! Хотели заказать у вас:
+  <div class="item">
+    <div class="item-info">
+      <div class="item-title">Дунганский перец</div>
+      <div class="item-price">8000 ₸ / кг</div>
+    </div>
+    <img src="img/karbonara.jpg" alt="">
+  </div>
+
+  <div class="item">
+    <div class="item-info">
+      <div class="item-title">Долма</div>
+      <div class="item-price">330 ₸</div>
+    </div>
+    <img src="img/steak.jpg" alt="">
+  </div>
+</div>
+
+<!-- ====== Ассорти ====== -->
+<div class="category">
+  <div class="category-title">Готовые ассорти</div>
+
+  <div class="item">
+    <div class="item-info">
+      <div class="item-title">Куриный ассорти</div>
+      <div class="item-price">3800 ₸</div>
+    </div>
+    <img src="img/karbonara.jpg" alt="">
+  </div>
+
+  <div class="item">
+    <div class="item-info">
+      <div class="item-title">Мясной ассорти</div>
+      <div class="item-price">4200 ₸</div>
+    </div>
+    <img src="img/steak.jpg" alt="">
+  </div>
+</div>
+
+<!-- ====== Дополнительные услуги ====== -->
+<div class="category">
+  <div class="category-title">Дополнительные услуги</div>
+
+  <div class="item">
+    <div class="item-info">
+      <div class="item-title">Выезд на приготовление блюд</div>
+      <div class="item-price">Обговорная цена</div>
+    </div>
+    <img src="img/karbonara.jpg" alt="">
+  </div>
+
+  <div class="item">
+    <div class="item-info">
+      <div class="item-title">Приготовление мясной продукции для мероприятия</div>
+      <div class="item-price">Обговорная цена</div>
+    </div>
+    <img src="img/steak.jpg" alt="">
+  </div>
+</div>
+
+<!-- БРОНИРОВАНИЕ -->
+<div class="bron">
+  <h2>Бронирование</h2>
+
+  <select id="orderType">
+    <option value="" disabled selected hidden>Выберите тип заказа</option>
+    <option value="Ассорти">Ассорти</option>
+    <option value="Рулеты">Рулеты</option>
+    <option value="Котлеты">Котлеты</option>
+    <option value="Выезд повара">Выезд повара</option>
+    <option value="Приготовление блюд">Приготовление блюд</option>
+  </select>
+
+  <input type="text" id="assorti" placeholder="Тип ассорти (если нужно)" />
+  <input type="number" id="guests" placeholder="Количество гостей" />
+  <input type="date" id="date" />
+  <input type="time" id="time" />
+
+  <button onclick="sendWA()">Забронировать</button>
+</div>
+
+<script>
+function sendWA() {
+  let type = document.getElementById('orderType').value;
+  let assorti = document.getElementById('assorti').value;
+  let guests = document.getElementById('guests').value;
+  let date = document.getElementById('date').value;
+  let time = document.getElementById('time').value;
+
+  if (!type || !date) {
+    alert("Пожалуйста, выберите тип заказа и дату!");
+    return;
+  }
+
+  let text =
+`Здравствуйте! Хотели заказать у вас:
 Тип заказа: ${type}
 Тип ассорти: ${assorti || 'Не указан'}
 Количество гостей: ${guests || 'Не указано'}
 Дата: ${date}
 Время: ${time || 'Не указано'}`;
 
-      let url = `https://wa.me/77069639442?text=${encodeURIComponent(text)}`;
-      window.open(url, '_blank');
-    }
-
-    // LIGHTBOX
-    const lightbox = document.getElementById("lightbox");
-    const lightboxImg = lightbox.querySelector("img");
-
-    document.querySelectorAll(".gallery-grid img, .assorti-grid img").forEach(img => {
-      img.addEventListener("click", () => {
-        lightbox.style.display = "flex";
-        lightboxImg.src = img.src;
-      });
-    });
-
-    lightbox.addEventListener("click", () => {
-      lightbox.style.display = "none";
-    });
-  </script>
+  let url = `https://wa.me/77066399442?text=${encodeURIComponent(text)}`;
+  window.open(url, '_blank');
+}
+</script>
 
 </body>
 </html>
