@@ -196,6 +196,40 @@
       color: #c7a35a;
       animation: fadeIn 1s ease;
     }
+    /* Модальное окно для фото */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0,0,0,0.9);
+      justify-content: center;
+      align-items: center;
+    }
+    .modal-content {
+      max-width: 90%;
+      max-height: 90vh;
+      object-fit: contain;
+    }
+    .close {
+      position: absolute;
+      top: 15px;
+      right: 35px;
+      color: #f1f1f1;
+      font-size: 40px;
+      font-weight: bold;
+      transition: 0.3s;
+      cursor: pointer;
+    }
+    .close:hover,
+    .close:focus {
+      color: #bbb;
+      text-decoration: none;
+    }
     /* АДАПТАЦИЯ ДЛЯ ТЕЛЕФОНОВ */
     @media (max-width: 600px) {
       .item {
@@ -237,18 +271,14 @@
         <div class="item-title">Котлета мясная</div>
         <div class="item-price">220 ₸</div>
       </div>
-      <a href="pics/WhatsApp Image 2025-11-26 at 14.35.18.jpeg" target="_blank">
-        <img src="pics/WhatsApp Image 2025-11-26 at 14.35.18.jpeg" alt="Котлета мясная" loading="lazy">
-      </a>
+      <img src="pics/WhatsApp Image 2025-11-26 at 14.35.18.jpeg" alt="Котлета мясная" loading="lazy" onclick="openModal(this.src)">
     </div>
     <div class="item" style="--item-index: 2;">
       <div class="item-info">
         <div class="item-title">Котлета с хлопьями</div>
         <div class="item-price">190 ₸</div>
       </div>
-      <a href="pics/kotleta-gov.jpg" target="_blank">
-        <img src="pics/kotleta-gov.jpg" alt="Котлета с хлопьями" loading="lazy">
-      </a>
+      <img src="pics/kotleta-gov.jpg" alt="Котлета с хлопьями" loading="lazy" onclick="openModal(this.src)">
     </div>
   </section>
 
@@ -260,18 +290,14 @@
         <div class="item-title">Рулет куриный</div>
         <div class="item-price">2800 ₸</div>
       </div>
-      <a href="pics/Рулет из куриной грудки с грибами и сыром.jpg" target="_blank">
-        <img src="pics/Рулет из куриной грудки с грибами и сыром.jpg" alt="Рулет куриный с грибами и сыром" loading="lazy">
-      </a>
+      <img src="pics/Рулет из куриной грудки с грибами и сыром.jpg" alt="Рулет куриный с грибами и сыром" loading="lazy" onclick="openModal(this.src)">
     </div>
     <div class="item" style="--item-index: 2;">
       <div class="item-info">
         <div class="item-title">Рулет микс</div>
         <div class="item-price">3000 ₸</div>
       </div>
-      <a href="pics/rulet-grib.jpg" target="_blank">
-        <img src="pics/rulet-grib.jpg" alt="Рулет микс с грибами" loading="lazy">
-      </a>
+      <img src="pics/rulet-grib.jpg" alt="Рулет микс с грибами" loading="lazy" onclick="openModal(this.src)">
     </div>
   </section>
 
@@ -283,18 +309,14 @@
         <div class="item-title">Дунганский перец</div>
         <div class="item-price">8000 ₸ / кг</div>
       </div>
-      <a href="pics/sddefault.jpg" target="_blank">
-        <img src="pics/sddefault.jpg" alt="Дунганский перец" loading="lazy">
-      </a>
+      <img src="pics/sddefault.jpg" alt="Дунганский перец" loading="lazy" onclick="openModal(this.src)">
     </div>
     <div class="item" style="--item-index: 2;">
       <div class="item-info">
         <div class="item-title">Долма</div>
         <div class="item-price">330 ₸</div>
       </div>
-      <a href="pics/p_O.png" target="_blank">
-        <img src="pics/p_O.png" alt="Долма" loading="lazy">
-      </a>
+      <img src="pics/p_O.png" alt="Долма" loading="lazy" onclick="openModal(this.src)">
     </div>
   </section>
 
@@ -306,36 +328,28 @@
         <div class="item-title">Куриный ассорти</div>
         <div class="item-price">3400 ₸</div>
       </div>
-      <a href="pics/WhatsApp Image 2025-11-26 at 14.35.17.jpeg" target="_blank">
-        <img src="pics/WhatsApp Image 2025-11-26 at 14.35.17.jpeg" alt="Куриный ассорти" loading="lazy">
-      </a>
+      <img src="pics/WhatsApp Image 2025-11-26 at 14.35.17.jpeg" alt="Куриный ассорти" loading="lazy" onclick="openModal(this.src)">
     </div>
     <div class="item" style="--item-index: 2;">
       <div class="item-info">
         <div class="item-title">Мясной ассорти</div>
         <div class="item-price">4200 ₸</div>
       </div>
-      <a href="pics/WhatsApp Image 2025-11-26 at 14.35.14.jpeg" target="_blank">
-        <img src="pics/WhatsApp Image 2025-11-26 at 14.35.14.jpeg" alt="Мясной ассорти" loading="lazy">
-      </a>
+      <img src="pics/WhatsApp Image 2025-11-26 at 14.35.14.jpeg" alt="Мясной ассорти" loading="lazy" onclick="openModal(this.src)">
     </div>
     <div class="item" style="--item-index: 3;">
       <div class="item-info">
         <div class="item-title">Байтерек</div>
         <div class="item-price">12000 ₸</div>
       </div>
-      <a href="pics/WhatsApp Image 2025-11-26 at 14.35.23.jpeg" target="_blank">
-        <img src="pics/WhatsApp Image 2025-11-26 at 14.35.23.jpeg" alt="Ассорти Байтерек" loading="lazy">
-      </a>
+      <img src="pics/WhatsApp Image 2025-11-26 at 14.35.23.jpeg" alt="Ассорти Байтерек" loading="lazy" onclick="openModal(this.src)">
     </div>
     <div class="item" style="--item-index: 4;">
       <div class="item-info">
         <div class="item-title">Дракон</div>
         <div class="item-price">12000 ₸</div>
       </div>
-      <a href="pics/960e2e39-e10a-4242-b640-aea19ec5850c.jpg" target="_blank">
-        <img src="pics/960e2e39-e10a-4242-b640-aea19ec5850c.jpg" alt="Ассорти Дракон" loading="lazy">
-      </a>
+      <img src="pics/960e2e39-e10a-4242-b640-aea19ec5850c.jpg" alt="Ассорти Дракон" loading="lazy" onclick="openModal(this.src)">
     </div>
   </section>
 
@@ -347,18 +361,14 @@
         <div class="item-title">Выезд на приготовление блюд</div>
         <div class="item-price">Договорная цена</div>
       </div>
-      <a href="pics/kulinarnyy-master-klass.png" target="_blank">
-        <img src="pics/kulinarnyy-master-klass.png" alt="Выезд повара для приготовления блюд" loading="lazy">
-      </a>
+      <img src="pics/kulinarnyy-master-klass.png" alt="Выезд повара для приготовления блюд" loading="lazy" onclick="openModal(this.src)">
     </div>
     <div class="item" style="--item-index: 2;">
       <div class="item-info">
         <div class="item-title">Приготовление мясной продукции для мероприятия</div>
         <div class="item-price">Договорная цена</div>
       </div>
-      <a href="pics/assorted-meat-products.jpg" target="_blank">
-        <img src="pics/assorted-meat-products.jpg" alt="Приготовление мясной продукции" loading="lazy">
-      </a>
+      <img src="pics/assorted-meat-products.jpg" alt="Приготовление мясной продукции" loading="lazy" onclick="openModal(this.src)">
     </div>
   </section>
 
@@ -383,6 +393,12 @@
   <footer>
     <p>Контакты: +7 706 639 9442 | Ассорти © 2025</p>
   </footer>
+
+  <!-- Модальное окно -->
+  <div id="myModal" class="modal">
+    <span class="close" onclick="closeModal()">&times;</span>
+    <img class="modal-content" id="modalImg">
+  </div>
 
   <script>
     const orderType = document.getElementById('orderType');
@@ -424,6 +440,26 @@
         item.style.setProperty('--item-index', i + 1);
       });
     });
+
+    // Функции для модального окна
+    function openModal(src) {
+      const modal = document.getElementById('myModal');
+      const modalImg = document.getElementById('modalImg');
+      modal.style.display = 'flex';
+      modalImg.src = src;
+    }
+
+    function closeModal() {
+      document.getElementById('myModal').style.display = 'none';
+    }
+
+    // Закрытие по клику вне фото
+    window.onclick = function(event) {
+      const modal = document.getElementById('myModal');
+      if (event.target === modal) {
+        closeModal();
+      }
+    }
   </script>
 </body>
 </html>
