@@ -3,46 +3,81 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Меню ассорти из мяса, рулетов, котлет и холодных закусок. Закажите готовые блюда или услуги повара в Ассорти." />
   <title>Меню — Ассорти</title>
-
   <style>
     body {
       margin: 0;
       font-family: Arial, sans-serif;
-      background: #0d0d0d;
+      background: linear-gradient(135deg, #0d0d0d 0%, #1a1a1a 50%, #0d0d0d 100%);
       color: #f0d08a;
+      position: relative;
+      overflow-x: hidden;
     }
-
-    h1 {
+    body::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle, rgba(212, 180, 108, 0.1) 0%, rgba(0,0,0,0) 70%);
+      opacity: 0.5;
+      animation: pulse 5s infinite alternate;
+      pointer-events: none;
+    }
+    @keyframes pulse {
+      0% { opacity: 0.3; transform: scale(1); }
+      100% { opacity: 0.6; transform: scale(1.05); }
+    }
+    header {
       text-align: center;
       padding: 20px;
+      background: rgba(21, 21, 21, 0.8);
+      border-bottom: 2px solid #d4b46c;
+      animation: slideDown 1s ease;
+    }
+    @keyframes slideDown {
+      from { opacity: 0; transform: translateY(-50px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    h1 {
+      margin: 0;
       color: #e5c67b;
       font-size: 32px;
       animation: fadeIn 1s ease;
     }
-
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(-10px); }
       to { opacity: 1; transform: translateY(0); }
     }
-
     .category {
       margin: 25px 0;
       padding: 0 15px;
-      animation: fadeIn 0.8s ease;
+      opacity: 0;
+      animation: fadeInUp 0.8s ease forwards;
+      animation-delay: calc(0.2s * var(--index));
     }
-
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
     .category-title {
       font-size: 26px;
       color: #d4b46c;
       margin-bottom: 15px;
       border-left: 4px solid #d4b46c;
       padding-left: 10px;
+      animation: slideInLeft 0.5s ease;
     }
-
+    @keyframes slideInLeft {
+      from { opacity: 0; transform: translateX(-20px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
     .item {
-      background: #151515;
-      border: 1px solid #2a2a2a;
+      background: rgba(21, 21, 21, 0.5);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(212, 180, 108, 0.2);
       padding: 15px;
       border-radius: 12px;
       margin-bottom: 15px;
@@ -50,80 +85,84 @@
       align-items: center;
       justify-content: space-between;
       gap: 15px;
-      transition: transform 0.25s ease, background 0.25s ease, box-shadow 0.25s ease;
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+      opacity: 0;
+      animation: fadeInScale 0.6s ease forwards;
+      animation-delay: calc(0.1s * var(--item-index));
     }
-
+    @keyframes fadeInScale {
+      from { opacity: 0; transform: scale(0.95); }
+      to { opacity: 1; transform: scale(1); }
+    }
     .item:hover {
-      transform: translateY(-4px);
-      background: #1c1c1c;
-      box-shadow: 0 4px 12px rgba(255, 215, 130, 0.12);
+      transform: translateY(-4px) rotate(1deg);
+      box-shadow: 0 4px 12px rgba(255, 215, 130, 0.2);
     }
-
     .item img {
       width: 110px;
       height: 110px;
       object-fit: cover;
       border-radius: 10px;
       border: 2px solid #947a3f;
-      transition: transform 0.3s ease;
+      cursor: pointer;
     }
-
-    .item:hover img {
-      transform: scale(1.05);
-    }
-
     .item-info {
       flex: 1;
+      transition: color 0.3s ease;
     }
-
+    .item:hover .item-info {
+      color: #ffd98e;
+    }
     .item-title {
       font-size: 20px;
       margin-bottom: 5px;
       color: #e5c67b;
     }
-
     .item-price {
       font-size: 18px;
       color: #c7a35a;
     }
-
     /* БРОНИРОВАНИЕ */
     .bron {
       margin: 35px auto;
       max-width: 420px;
       padding: 20px;
-      background: #1a1a1a;
-      border: 1px solid #8b6f27;
+      background: rgba(21, 21, 21, 0.5);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(212, 180, 108, 0.2);
       border-radius: 14px;
-      animation: fadeIn 1s ease;
+      animation: fadeIn 1s ease, bounceIn 0.8s ease;
       box-shadow: 0 0 15px rgba(255, 215, 130, 0.12);
     }
-
+    @keyframes bounceIn {
+      0% { transform: scale(0.8); opacity: 0; }
+      50% { transform: scale(1.05); opacity: 1; }
+      100% { transform: scale(1); }
+    }
     .bron h2 {
       text-align: center;
       color: #ffd98e;
       margin-bottom: 10px;
     }
-
     .bron input,
     .bron select {
-      width: 100%;
+      width: calc(100% - 24px); /* Подгонка под padding */
       padding: 12px;
       margin-top: 10px;
       border-radius: 10px;
       border: 1px solid #8b6f27;
       background: #0d0d0d;
       color: #f1d78a;
-      transition: border 0.3s ease, background 0.3s ease;
+      transition: border 0.3s ease, background 0.3s ease, transform 0.2s ease;
+      font-size: 16px;
     }
-
     .bron input:focus,
     .bron select:focus {
       border-color: #ffd98e;
       background: #141414;
       outline: none;
+      transform: scale(1.02);
     }
-
     .bron button {
       width: 100%;
       margin-top: 15px;
@@ -135,17 +174,28 @@
       font-size: 18px;
       font-weight: bold;
       cursor: pointer;
-      transition: background 0.3s ease, transform 0.15s ease;
+      transition: background 0.3s ease, transform 0.15s ease, box-shadow 0.3s ease;
     }
-
     .bron button:hover {
       background: #e6c26c;
+      box-shadow: 0 0 15px #e6c26c;
+      transform: translateY(-2px);
     }
-
     .bron button:active {
       transform: scale(0.97);
     }
-
+    .hidden {
+      display: none;
+    }
+    footer {
+      text-align: center;
+      padding: 15px;
+      background: rgba(21, 21, 21, 0.8);
+      border-top: 2px solid #d4b46c;
+      font-size: 14px;
+      color: #c7a35a;
+      animation: fadeIn 1s ease;
+    }
     /* АДАПТАЦИЯ ДЛЯ ТЕЛЕФОНОВ */
     @media (max-width: 600px) {
       .item {
@@ -154,7 +204,8 @@
       }
       .item img {
         width: 100%;
-        height: 210px;
+        height: auto;
+        max-height: 210px;
       }
       h1 {
         font-size: 26px;
@@ -162,183 +213,217 @@
       .category-title {
         font-size: 22px;
       }
+      .bron {
+        max-width: 90%;
+        padding: 15px;
+      }
+      .bron input,
+      .bron select {
+        font-size: 14px;
+      }
     }
   </style>
 </head>
 <body>
+  <header>
+    <h1>Меню — Ассорти</h1>
+  </header>
 
-<h1>Меню</h1>
-
-<!-- ====== Котлеты ====== -->
-<div class="category">
-  <div class="category-title">Котлеты</div>
-
-  <div class="item">
-    <div class="item-info">
-      <div class="item-title">Котлета мясная</div>
-      <div class="item-price">220 ₸</div>
+  <!-- ====== Котлеты ====== -->
+  <section class="category" style="--index: 1;">
+    <h2 class="category-title">Котлеты</h2>
+    <div class="item" style="--item-index: 1;">
+      <div class="item-info">
+        <div class="item-title">Котлета мясная</div>
+        <div class="item-price">220 ₸</div>
+      </div>
+      <a href="pics/WhatsApp Image 2025-11-26 at 14.35.18.jpeg" target="_blank">
+        <img src="pics/WhatsApp Image 2025-11-26 at 14.35.18.jpeg" alt="Котлета мясная" loading="lazy">
+      </a>
     </div>
-    <img src="pics/WhatsApp Image 2025-11-26 at 14.35.18.jpeg" alt="">
+    <div class="item" style="--item-index: 2;">
+      <div class="item-info">
+        <div class="item-title">Котлета с хлопьями</div>
+        <div class="item-price">190 ₸</div>
+      </div>
+      <a href="pics/kotleta-gov.jpg" target="_blank">
+        <img src="pics/kotleta-gov.jpg" alt="Котлета с хлопьями" loading="lazy">
+      </a>
+    </div>
+  </section>
+
+  <!-- ====== Рулеты ====== -->
+  <section class="category" style="--index: 2;">
+    <h2 class="category-title">Рулеты</h2>
+    <div class="item" style="--item-index: 1;">
+      <div class="item-info">
+        <div class="item-title">Рулет куриный</div>
+        <div class="item-price">2800 ₸</div>
+      </div>
+      <a href="pics/Рулет из куриной грудки с грибами и сыром.jpg" target="_blank">
+        <img src="pics/Рулет из куриной грудки с грибами и сыром.jpg" alt="Рулет куриный с грибами и сыром" loading="lazy">
+      </a>
+    </div>
+    <div class="item" style="--item-index: 2;">
+      <div class="item-info">
+        <div class="item-title">Рулет микс</div>
+        <div class="item-price">3000 ₸</div>
+      </div>
+      <a href="pics/rulet-grib.jpg" target="_blank">
+        <img src="pics/rulet-grib.jpg" alt="Рулет микс с грибами" loading="lazy">
+      </a>
+    </div>
+  </section>
+
+  <!-- ====== Холодные закуски ====== -->
+  <section class="category" style="--index: 3;">
+    <h2 class="category-title">Холодные закуски</h2>
+    <div class="item" style="--item-index: 1;">
+      <div class="item-info">
+        <div class="item-title">Дунганский перец</div>
+        <div class="item-price">8000 ₸ / кг</div>
+      </div>
+      <a href="pics/sddefault.jpg" target="_blank">
+        <img src="pics/sddefault.jpg" alt="Дунганский перец" loading="lazy">
+      </a>
+    </div>
+    <div class="item" style="--item-index: 2;">
+      <div class="item-info">
+        <div class="item-title">Долма</div>
+        <div class="item-price">330 ₸</div>
+      </div>
+      <a href="pics/p_O.png" target="_blank">
+        <img src="pics/p_O.png" alt="Долма" loading="lazy">
+      </a>
+    </div>
+  </section>
+
+  <!-- ====== Ассорти ====== -->
+  <section class="category" style="--index: 4;">
+    <h2 class="category-title">Готовые ассорти</h2>
+    <div class="item" style="--item-index: 1;">
+      <div class="item-info">
+        <div class="item-title">Куриный ассорти</div>
+        <div class="item-price">3400 ₸</div>
+      </div>
+      <a href="pics/WhatsApp Image 2025-11-26 at 14.35.17.jpeg" target="_blank">
+        <img src="pics/WhatsApp Image 2025-11-26 at 14.35.17.jpeg" alt="Куриный ассорти" loading="lazy">
+      </a>
+    </div>
+    <div class="item" style="--item-index: 2;">
+      <div class="item-info">
+        <div class="item-title">Мясной ассорти</div>
+        <div class="item-price">4200 ₸</div>
+      </div>
+      <a href="pics/WhatsApp Image 2025-11-26 at 14.35.14.jpeg" target="_blank">
+        <img src="pics/WhatsApp Image 2025-11-26 at 14.35.14.jpeg" alt="Мясной ассорти" loading="lazy">
+      </a>
+    </div>
+    <div class="item" style="--item-index: 3;">
+      <div class="item-info">
+        <div class="item-title">Байтерек</div>
+        <div class="item-price">12000 ₸</div>
+      </div>
+      <a href="pics/WhatsApp Image 2025-11-26 at 14.35.23.jpeg" target="_blank">
+        <img src="pics/WhatsApp Image 2025-11-26 at 14.35.23.jpeg" alt="Ассорти Байтерек" loading="lazy">
+      </a>
+    </div>
+    <div class="item" style="--item-index: 4;">
+      <div class="item-info">
+        <div class="item-title">Дракон</div>
+        <div class="item-price">12000 ₸</div>
+      </div>
+      <a href="pics/960e2e39-e10a-4242-b640-aea19ec5850c.jpg" target="_blank">
+        <img src="pics/960e2e39-e10a-4242-b640-aea19ec5850c.jpg" alt="Ассорти Дракон" loading="lazy">
+      </a>
+    </div>
+  </section>
+
+  <!-- ====== Дополнительные услуги ====== -->
+  <section class="category" style="--index: 5;">
+    <h2 class="category-title">Дополнительные услуги</h2>
+    <div class="item" style="--item-index: 1;">
+      <div class="item-info">
+        <div class="item-title">Выезд на приготовление блюд</div>
+        <div class="item-price">Договорная цена</div>
+      </div>
+      <a href="pics/kulinarnyy-master-klass.png" target="_blank">
+        <img src="pics/kulinarnyy-master-klass.png" alt="Выезд повара для приготовления блюд" loading="lazy">
+      </a>
+    </div>
+    <div class="item" style="--item-index: 2;">
+      <div class="item-info">
+        <div class="item-title">Приготовление мясной продукции для мероприятия</div>
+        <div class="item-price">Договорная цена</div>
+      </div>
+      <a href="pics/assorted-meat-products.jpg" target="_blank">
+        <img src="pics/assorted-meat-products.jpg" alt="Приготовление мясной продукции" loading="lazy">
+      </a>
+    </div>
+  </section>
+
+  <!-- БРОНИРОВАНИЕ -->
+  <div class="bron">
+    <h2>Бронирование</h2>
+    <select id="orderType">
+      <option value="" disabled selected>Выберите тип заказа</option>
+      <option value="Ассорти">Ассорти</option>
+      <option value="Рулеты">Рулеты</option>
+      <option value="Котлеты">Котлеты</option>
+      <option value="Выезд повара">Выезд повара</option>
+      <option value="Приготовление блюд">Приготовление блюд</option>
+    </select>
+    <input type="text" id="assorti" class="hidden" placeholder="Тип ассорти (если нужно)" />
+    <input type="number" id="guests" placeholder="Количество гостей" min="1" />
+    <input type="date" id="date" min="2025-11-29" />
+    <input type="time" id="time" />
+    <button onclick="sendWA()">Забронировать</button>
   </div>
 
-  <div class="item">
-    <div class="item-info">
-      <div class="item-title">Котлета с хлопьями</div>
-      <div class="item-price">190 ₸</div>
-    </div>
-    <img src="img/kotleta-gov.jpg" alt="">
-  </div>
-</div>
+  <footer>
+    <p>Контакты: +7 706 639 9442 | Ассорти © 2025</p>
+  </footer>
 
-<!-- ====== Рулеты ====== -->
-<div class="category">
-  <div class="category-title">Рулеты</div>
+  <script>
+    const orderType = document.getElementById('orderType');
+    const assortiInput = document.getElementById('assorti');
 
-  <div class="item">
-    <div class="item-info">
-      <div class="item-title">Рулет куриный</div>
-      <div class="item-price">2800 ₸</div>
-    </div>
-    <img src="pics/Рулет из куриной грудки с грибами и сыром.jpg" alt="">
-  </div>
+    orderType.addEventListener('change', () => {
+      if (orderType.value === 'Ассорти') {
+        assortiInput.classList.remove('hidden');
+      } else {
+        assortiInput.classList.add('hidden');
+        assortiInput.value = '';
+      }
+    });
 
-  <div class="item">
-    <div class="item-info">
-      <div class="item-title">Рулет микс</div>
-      <div class="item-price">3000 ₸</div>
-    </div>
-    <img src="img/rulet-grib.jpg" alt="">
-  </div>
-</div>
+    function sendWA() {
+      const type = orderType.value;
+      const assorti = assortiInput.value;
+      const guests = document.getElementById('guests').value;
+      const date = document.getElementById('date').value;
+      const time = document.getElementById('time').value;
 
-<!-- ====== Холодные закуски ====== -->
-<div class="category">
-  <div class="category-title">Холодные закуски</div>
+      if (!type || !date) {
+        alert("Пожалуйста, выберите тип заказа и дату!");
+        return;
+      }
 
-  <div class="item">
-    <div class="item-info">
-      <div class="item-title">Дунганский перец</div>
-      <div class="item-price">8000 ₸ / кг</div>
-    </div>
-    <img src="pics/sddefault.jpg" alt="">
-  </div>
+      let text = `Здравствуйте! Хотели заказать у вас:\nТип заказа: ${type}\n`;
+      if (assorti) text += `Тип ассорти: ${assorti}\n`;
+      text += `Количество гостей: ${guests || 'Не указано'}\nДата: ${date}\nВремя: ${time || 'Не указано'}`;
 
-  <div class="item">
-    <div class="item-info">
-      <div class="item-title">Долма</div>
-      <div class="item-price">330 ₸</div>
-    </div>
-    <img src="pics/p_O.png" alt="">
-  </div>
-</div>
+      const url = `https://wa.me/77066399442?text=${encodeURIComponent(text)}`;
+      window.open(url, '_blank');
+    }
 
-<!-- ====== Ассорти ====== -->
-<div class="category">
-  <div class="category-title">Готовые ассорти</div>
-
-  <div class="item">
-    <div class="item-info">
-      <div class="item-title">Куриный ассорти</div>
-      <div class="item-price">3400 ₸</div>
-    </div>
-    <img src="pics/WhatsApp Image 2025-11-26 at 14.35.17.jpeg" alt="">
-  </div>
-
-  <div class="item">
-    <div class="item-info">
-      <div class="item-title">Мясной ассорти</div>
-      <div class="item-price">4200 ₸</div>
-    </div>
-    <img src="pics/WhatsApp Image 2025-11-26 at 14.35.14.jpeg" alt="">
-  </div>
-
-    <div class="item">
-    <div class="item-info">
-      <div class="item-title">байтерек</div>
-      <div class="item-price">12000 ₸</div>
-    </div>
-    <img src="pics/WhatsApp Image 2025-11-26 at 14.35.23.jpeg" alt="">
-  </div>
-
-  <div class="item">
-    <div class="item-info">
-      <div class="item-title">дракон</div>
-      <div class="item-price">12000 ₸</div>
-    </div>
-    <img src="pics/960e2e39-e10a-4242-b640-aea19ec5850c.jpg" alt="">
-  </div>
-
-    
-  
-</div>
-
-<!-- ====== Дополнительные услуги ====== -->
-<div class="category">
-  <div class="category-title">Дополнительные услуги</div>
-
-  <div class="item">
-    <div class="item-info">
-      <div class="item-title">Выезд на приготовление блюд</div>
-      <div class="item-price">Обговорная цена</div>
-    </div>
-    <img src="pics/Кулинарный мастер-класс от шеф-повара нашего ресторана Фрида! http___rivieramaya_grandvelas.com_russian_.png" alt="">
-  </div>
-
-  <div class="item">
-    <div class="item-info">
-      <div class="item-title">Приготовление мясной продукции для мероприятия</div>
-      <div class="item-price">Обговорная цена</div>
-    </div>
-    <img src="pics/Assorted meat products including ham and sausages _ Premium Photo.jpg" alt="">
-  </div>
-</div>
-
-<!-- БРОНИРОВАНИЕ -->
-<div class="bron">
-  <h2>Бронирование</h2>
-
-  <select id="orderType">
-    <option value="" disabled selected hidden>Выберите тип заказа</option>
-    <option value="Ассорти">Ассорти</option>
-    <option value="Рулеты">Рулеты</option>
-    <option value="Котлеты">Котлеты</option>
-    <option value="Выезд повара">Выезд повара</option>
-    <option value="Приготовление блюд">Приготовление блюд</option>
-  </select>
-
-  <input type="text" id="assorti" placeholder="Тип ассорти (если нужно)" />
-  <input type="number" id="guests" placeholder="Количество гостей" />
-  <input type="date" id="date" />
-  <input type="time" id="time" />
-
-  <button onclick="sendWA()">Забронировать</button>
-</div>
-
-<script>
-function sendWA() {
-  let type = document.getElementById('orderType').value;
-  let assorti = document.getElementById('assorti').value;
-  let guests = document.getElementById('guests').value;
-  let date = document.getElementById('date').value;
-  let time = document.getElementById('time').value;
-
-  if (!type || !date) {
-    alert("Пожалуйста, выберите тип заказа и дату!");
-    return;
-  }
-
-  let text =
-`Здравствуйте! Хотели заказать у вас:
-Тип заказа: ${type}
-Тип ассорти: ${assorti || 'Не указан'}
-Количество гостей: ${guests || 'Не указано'}
-Дата: ${date}
-Время: ${time || 'Не указано'}`;
-
-  let url = `https://wa.me/77066399442?text=${encodeURIComponent(text)}`;
-  window.open(url, '_blank');
-}
-</script>
-
+    // Анимация для категорий и айтемов
+    document.querySelectorAll('.category').forEach((cat, index) => {
+      cat.style.setProperty('--index', index + 1);
+      cat.querySelectorAll('.item').forEach((item, i) => {
+        item.style.setProperty('--item-index', i + 1);
+      });
+    });
+  </script>
 </body>
 </html>
