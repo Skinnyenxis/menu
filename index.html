@@ -253,6 +253,41 @@
         background: #20ba58;
         transform: translateY(-3px);
       }
+      /* big_food_kz style tweaks */
+      .menu-card {
+        border: 4px solid #ff7a00;
+      }
+      .menu-item h3 { font-weight: 800; font-size: 1.15rem; }
+      .menu-item p { color: #6b5a4a; }
+      .whatsapp-btn {
+        display: inline-flex;
+        gap: .6rem;
+        align-items: center;
+        background: linear-gradient(90deg,#25d366,#1ebe5b);
+        color: #fff;
+        padding: .6rem 1rem;
+        border-radius: 12px;
+        font-weight: 800;
+        font-size: .95rem;
+        border: none;
+        cursor: pointer;
+        box-shadow: 0 10px 30px rgba(37,211,102,.18);
+      }
+      .whatsapp-btn:hover { transform: translateY(-3px); }
+      .whatsapp-fab {
+        position: fixed;
+        right: 20px;
+        bottom: 20px;
+        background: #25d366;
+        color: #fff;
+        width: 56px;
+        height: 56px;
+        border-radius: 50%;
+        display: grid;
+        place-items: center;
+        box-shadow: 0 16px 40px rgba(37,211,102,.18);
+        z-index: 60;
+      }
       @media (min-width: 640px) {
         .menu-grid {
           grid-template-columns: repeat(2, minmax(0, 1fr));
