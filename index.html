@@ -1,465 +1,518 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ru">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Меню ассорти из мяса, рулетов, котлет и холодных закусок. Закажите готовые блюда или услуги повара в Ассорти." />
-  <title>Меню — Ассорти</title>
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: linear-gradient(135deg, #0d0d0d 0%, #1a1a1a 50%, #0d0d0d 100%);
-      color: #f0d08a;
-      position: relative;
-      overflow-x: hidden;
-    }
-    body::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: radial-gradient(circle, rgba(212, 180, 108, 0.1) 0%, rgba(0,0,0,0) 70%);
-      opacity: 0.5;
-      animation: pulse 5s infinite alternate;
-      pointer-events: none;
-    }
-    @keyframes pulse {
-      0% { opacity: 0.3; transform: scale(1); }
-      100% { opacity: 0.6; transform: scale(1.05); }
-    }
-    header {
-      text-align: center;
-      padding: 20px;
-      background: rgba(21, 21, 21, 0.8);
-      border-bottom: 2px solid #d4b46c;
-      animation: slideDown 1s ease;
-    }
-    @keyframes slideDown {
-      from { opacity: 0; transform: translateY(-50px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    h1 {
-      margin: 0;
-      color: #e5c67b;
-      font-size: 32px;
-      animation: fadeIn 1s ease;
-    }
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(-10px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    .category {
-      margin: 25px 0;
-      padding: 0 15px;
-      opacity: 0;
-      animation: fadeInUp 0.8s ease forwards;
-      animation-delay: calc(0.2s * var(--index));
-    }
-    @keyframes fadeInUp {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    .category-title {
-      font-size: 26px;
-      color: #d4b46c;
-      margin-bottom: 15px;
-      border-left: 4px solid #d4b46c;
-      padding-left: 10px;
-      animation: slideInLeft 0.5s ease;
-    }
-    @keyframes slideInLeft {
-      from { opacity: 0; transform: translateX(-20px); }
-      to { opacity: 1; transform: translateX(0); }
-    }
-    .item {
-      background: rgba(21, 21, 21, 0.5);
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(212, 180, 108, 0.2);
-      padding: 15px;
-      border-radius: 12px;
-      margin-bottom: 15px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 15px;
-      transition: transform 0.25s ease, box-shadow 0.25s ease;
-      opacity: 0;
-      animation: fadeInScale 0.6s ease forwards;
-      animation-delay: calc(0.1s * var(--item-index));
-    }
-    @keyframes fadeInScale {
-      from { opacity: 0; transform: scale(0.95); }
-      to { opacity: 1; transform: scale(1); }
-    }
-    .item:hover {
-      transform: translateY(-4px) rotate(1deg);
-      box-shadow: 0 4px 12px rgba(255, 215, 130, 0.2);
-    }
-    .item img {
-      width: 110px;
-      height: 110px;
-      object-fit: cover;
-      border-radius: 10px;
-      border: 2px solid #947a3f;
-      cursor: pointer;
-    }
-    .item-info {
-      flex: 1;
-      transition: color 0.3s ease;
-    }
-    .item:hover .item-info {
-      color: #ffd98e;
-    }
-    .item-title {
-      font-size: 20px;
-      margin-bottom: 5px;
-      color: #e5c67b;
-    }
-    .item-price {
-      font-size: 18px;
-      color: #c7a35a;
-    }
-    /* БРОНИРОВАНИЕ */
-    .bron {
-      margin: 35px auto;
-      max-width: 420px;
-      padding: 20px;
-      background: rgba(21, 21, 21, 0.5);
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(212, 180, 108, 0.2);
-      border-radius: 14px;
-      animation: fadeIn 1s ease, bounceIn 0.8s ease;
-      box-shadow: 0 0 15px rgba(255, 215, 130, 0.12);
-    }
-    @keyframes bounceIn {
-      0% { transform: scale(0.8); opacity: 0; }
-      50% { transform: scale(1.05); opacity: 1; }
-      100% { transform: scale(1); }
-    }
-    .bron h2 {
-      text-align: center;
-      color: #ffd98e;
-      margin-bottom: 10px;
-    }
-    .bron input,
-    .bron select {
-      width: calc(100% - 24px); /* Подгонка под padding */
-      padding: 12px;
-      margin-top: 10px;
-      border-radius: 10px;
-      border: 1px solid #8b6f27;
-      background: #0d0d0d;
-      color: #f1d78a;
-      transition: border 0.3s ease, background 0.3s ease, transform 0.2s ease;
-      font-size: 16px;
-    }
-    .bron input:focus,
-    .bron select:focus {
-      border-color: #ffd98e;
-      background: #141414;
-      outline: none;
-      transform: scale(1.02);
-    }
-    .bron button {
-      width: 100%;
-      margin-top: 15px;
-      padding: 14px;
-      background: #c8a04d;
-      color: #000;
-      border: none;
-      border-radius: 12px;
-      font-size: 18px;
-      font-weight: bold;
-      cursor: pointer;
-      transition: background 0.3s ease, transform 0.15s ease, box-shadow 0.3s ease;
-    }
-    .bron button:hover {
-      background: #e6c26c;
-      box-shadow: 0 0 15px #e6c26c;
-      transform: translateY(-2px);
-    }
-    .bron button:active {
-      transform: scale(0.97);
-    }
-    .hidden {
-      display: none;
-    }
-    footer {
-      text-align: center;
-      padding: 15px;
-      background: rgba(21, 21, 21, 0.8);
-      border-top: 2px solid #d4b46c;
-      font-size: 14px;
-      color: #c7a35a;
-      animation: fadeIn 1s ease;
-    }
-    /* Модальное окно для фото */
-    .modal {
-      display: none;
-      position: fixed;
-      z-index: 1000;
-      left: 0;
-      top: 0;
-      width: 100%;
-      height: 100%;
-      overflow: auto;
-      background-color: rgba(0,0,0,0.9);
-      justify-content: center;
-      align-items: center;
-    }
-    .modal-content {
-      max-width: 90%;
-      max-height: 90vh;
-      object-fit: contain;
-    }
-    .close {
-      position: absolute;
-      top: 15px;
-      right: 35px;
-      color: #f1f1f1;
-      font-size: 40px;
-      font-weight: bold;
-      transition: 0.3s;
-      cursor: pointer;
-    }
-    .close:hover,
-    .close:focus {
-      color: #bbb;
-      text-decoration: none;
-    }
-    /* АДАПТАЦИЯ ДЛЯ ТЕЛЕФОНОВ */
-    @media (max-width: 600px) {
-      .item {
-        flex-direction: column;
-        text-align: center;
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Ваше заведение | QR-меню</title>
+    <meta name="description" content="Быстрое обслуживание. Отличное качество. Удобный заказ по QR-меню." />
+    <style>
+      :root {
+        color-scheme: dark;
+        font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        background: #f7f4ef;
+        color: #1a1a1a;
       }
-      .item img {
-        width: 100%;
-        height: auto;
-        max-height: 210px;
+      * {
+        box-sizing: border-box;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        margin: 0;
+        line-height: 1.6;
+        font-size: 1rem;
+        background: #f4f0e8;
+      }
+      img {
+        max-width: 100%;
+        display: block;
+      }
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+      header {
+        padding: 1.4rem 1.2rem 0;
+      }
+      nav {
+        display: flex;
+        gap: 1rem;
+        justify-content: flex-end;
+        flex-wrap: wrap;
+        font-size: 0.95rem;
+        letter-spacing: .01em;
+      }
+      nav a {
+        color: #6c5a45;
+        transition: color .25s ease;
+      }
+      nav a:hover {
+        color: #111;
+      }
+      .container {
+        max-width: 960px;
+        margin: 0 auto;
+        padding: 0 1.2rem;
+      }
+      .hero {
+        min-height: calc(100vh - 6rem);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: 2rem 0 3rem;
+        background: radial-gradient(circle at top left, rgba(161,127,83,.14), transparent 28%), linear-gradient(180deg, #fdf7ef 0%, #f4ede5 100%);
+        border-radius: 2rem;
+        box-shadow: 0 24px 70px rgba(17,17,17,.08);
+        overflow: hidden;
+      }
+      .hero .eyebrow {
+        text-transform: uppercase;
+        letter-spacing: 0.25em;
+        font-size: 0.8rem;
+        margin-bottom: 1rem;
+        color: #a17f53;
       }
       h1 {
-        font-size: 26px;
+        font-size: clamp(2.4rem, 6vw, 4.4rem);
+        margin: 0;
+        max-width: 14ch;
+        line-height: 1.05;
       }
-      .category-title {
-        font-size: 22px;
+      .tagline {
+        margin: 1.4rem 0 2rem;
+        max-width: 44rem;
+        color: #4b4237;
+        font-size: 1.05rem;
       }
-      .bron {
-        max-width: 90%;
-        padding: 15px;
+      .button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 1rem 1.8rem;
+        background: #111;
+        color: #fff;
+        border: none;
+        border-radius: 999px;
+        font-weight: 700;
+        letter-spacing: 0.01em;
+        box-shadow: 0 14px 30px rgba(17,17,17,.18);
+        transition: transform .25s ease, background .25s ease, box-shadow .25s ease;
+        cursor: pointer;
+        font-size: 1rem;
       }
-      .bron input,
-      .bron select {
-        font-size: 14px;
+      .button:hover {
+        transform: translateY(-2px);
+        background: #222;
       }
-    }
-  </style>
-</head>
-<body>
-  <header>
-    <h1>Меню — Ассорти</h1>
-  </header>
-
-  <!-- ====== Котлеты ====== -->
-  <section class="category" style="--index: 1;">
-    <h2 class="category-title">Котлеты</h2>
-    <div class="item" style="--item-index: 1;">
-      <div class="item-info">
-        <div class="item-title">Котлета мясная</div>
-        <div class="item-price">220 ₸</div>
-      </div>
-      <img src="pics/WhatsApp Image 2025-11-26 at 14.35.18.jpeg" alt="Котлета мясная" loading="lazy" onclick="openModal(this.src)">
-    </div>
-    <div class="item" style="--item-index: 2;">
-      <div class="item-info">
-        <div class="item-title">Котлета с хлопьями</div>
-        <div class="item-price">230 ₸</div>
-      </div>
-      <img src="pics/kotleta-gov.jpg" alt="Котлета с хлопьями" loading="lazy" onclick="openModal(this.src)">
-    </div>
-  </section>
-
-  <!-- ====== Рулеты ====== -->
-  <section class="category" style="--index: 2;">
-    <h2 class="category-title">Рулеты</h2>
-    <div class="item" style="--item-index: 1;">
-      <div class="item-info">
-        <div class="item-title">Рулет куриный</div>
-        <div class="item-price">2800 ₸</div>
-      </div>
-      <img src="pics/Рулет из куриной грудки с сыром.jpg" alt="Рулет куриный с сыром" loading="lazy" onclick="openModal(this.src)">
-    </div>
-    <div class="item" style="--item-index: 2;">
-      <div class="item-info">
-        <div class="item-title">Рулет микс</div>
-        <div class="item-price">3000 ₸</div>
-      </div>
-      <img src="pics/rulet-grib.jpg" alt="Рулет микс с разным видом мяса" loading="lazy" onclick="openModal(this.src)">
-    </div>
-  </section>
-
-  <!-- ====== Холодные закуски ====== -->
-  <section class="category" style="--index: 3;">
-    <h2 class="category-title">Холодные закуски</h2>
-    <div class="item" style="--item-index: 1;">
-      <div class="item-info">
-        <div class="item-title">Дунганский перец</div>
-        <div class="item-price">8000 ₸ / кг</div>
-      </div>
-      <img src="pics/sddefault.jpg" alt="Дунганский перец" loading="lazy" onclick="openModal(this.src)">
-    </div>
-    <div class="item" style="--item-index: 2;">
-      <div class="item-info">
-        <div class="item-title">Долма</div>
-        <div class="item-price">200 ₸</div>
-      </div>
-      <img src="pics/p_O.png" alt="Долма" loading="lazy" onclick="openModal(this.src)">
-    </div>
-  </section>
-
-  <!-- ====== Ассорти ====== -->
-  <section class="category" style="--index: 4;">
-    <h2 class="category-title">Готовые ассорти</h2>
-    <div class="item" style="--item-index: 1;">
-      <div class="item-info">
-        <div class="item-title">Куриный ассорти</div>
-        <div class="item-price">3500-4000 ₸</div>
-      </div>
-      <img src="pics/WhatsApp Image 2025-11-26 at 14.35.17.jpeg" alt="Куриный ассорти" loading="lazy" onclick="openModal(this.src)">
-    </div>
-    <div class="item" style="--item-index: 2;">
-      <div class="item-info">
-        <div class="item-title">Мясной ассорти</div>
-        <div class="item-price">9000 ₸</div>
-      </div>
-      <img src="pics/WhatsApp Image 2025-11-26 at 14.35.14.jpeg" alt="Мясной ассорти" loading="lazy" onclick="openModal(this.src)">
-    </div>
-    <div class="item" style="--item-index: 3;">
-      <div class="item-info">
-        <div class="item-title">Байтерек</div>
-        <div class="item-price">12000 ₸</div>
-      </div>
-      <img src="pics/WhatsApp Image 2025-11-26 at 14.35.23.jpeg" alt="Ассорти Байтерек" loading="lazy" onclick="openModal(this.src)">
-    </div>
-    <div class="item" style="--item-index: 4;">
-      <div class="item-info">
-        <div class="item-title">Дракон</div>
-        <div class="item-price">12000 ₸</div>
-      </div>
-      <img src="pics/960e2e39-e10a-4242-b640-aea19ec5850c.jpg" alt="Ассорти Дракон" loading="lazy" onclick="openModal(this.src)">
-    </div>
-  </section>
-
-  <!-- ====== Дополнительные услуги ====== -->
-  <section class="category" style="--index: 5;">
-    <h2 class="category-title">Дополнительные услуги</h2>
-    <div class="item" style="--item-index: 1;">
-      <div class="item-info">
-        <div class="item-title">Выезд на приготовление блюд</div>
-        <div class="item-price">Договорная цена</div>
-      </div>
-      <img src="pics/Кулинарный мастер-класс от шеф-повара нашего ресторана Фрида! http___rivieramaya_grandvelas.com_russian_.png" alt="Выезд повара для приготовления блюд" loading="lazy" onclick="openModal(this.src)">
-    </div>
-    <div class="item" style="--item-index: 2;">
-      <div class="item-info">
-        <div class="item-title">Приготовление мясной продукции для мероприятия</div>
-        <div class="item-price">Договорная цена</div>
-      </div>
-      <img src="pics/Assorted meat products including ham and sausages _ Premium Photo.jpg" alt="Приготовление мясной продукции" loading="lazy" onclick="openModal(this.src)">
-    </div>
-  </section>
-
-  <!-- БРОНИРОВАНИЕ -->
-  <div class="bron">
-    <h2>Бронирование</h2>
-    <select id="orderType">
-      <option value="" disabled selected>Выберите тип заказа</option>
-      <option value="Ассорти">Ассорти</option>
-      <option value="Рулеты">Рулеты</option>
-      <option value="Котлеты">Котлеты</option>
-      <option value="Выезд повара">Выезд повара</option>
-      <option value="Приготовление блюд">Приготовление блюд</option>
-    </select>
-    <input type="text" id="assorti" class="hidden" placeholder="Тип ассорти (если нужно)" />
-    <input type="number" id="guests" placeholder="Количество гостей" min="1" />
-    <input type="date" id="date" min="2025-11-29" />
-    <input type="time" id="time" />
-    <button onclick="sendWA()">Забронировать</button>
-  </div>
-
-  <footer>
-    <p>Контакты: +7 706 639 9442 | Ассорти © 2025</p>
-  </footer>
-
-  <!-- Модальное окно -->
-  <div id="myModal" class="modal">
-    <span class="close" onclick="closeModal()">&times;</span>
-    <img class="modal-content" id="modalImg">
-  </div>
-
-  <script>
-    const orderType = document.getElementById('orderType');
-    const assortiInput = document.getElementById('assorti');
-
-    orderType.addEventListener('change', () => {
-      if (orderType.value === 'Ассорти') {
-        assortiInput.classList.remove('hidden');
-      } else {
-        assortiInput.classList.add('hidden');
-        assortiInput.value = '';
+      .button.primary {
+        padding: 1.2rem 2rem;
+        font-size: 1.05rem;
+        background: #1a1a1a;
+        box-shadow: 0 16px 40px rgba(17,17,17,.25);
       }
-    });
-
-    function sendWA() {
-      const type = orderType.value;
-      const assorti = assortiInput.value;
-      const guests = document.getElementById('guests').value;
-      const date = document.getElementById('date').value;
-      const time = document.getElementById('time').value;
-
-      if (!type || !date) {
-        alert("Пожалуйста, выберите тип заказа и дату!");
-        return;
+      .button.primary:hover {
+        background: #000;
+        transform: translateY(-3px);
+        box-shadow: 0 20px 50px rgba(17,17,17,.3);
       }
-
-      let text = `Здравствуйте! Хотели заказать у вас:\nТип заказа: ${type}\n`;
-      if (assorti) text += `Тип ассорти: ${assorti}\n`;
-      text += `Количество гостей: ${guests || 'Не указано'}\nДата: ${date}\nВремя: ${time || 'Не указано'}`;
-
-      const url = `https://wa.me/77066399442?text=${encodeURIComponent(text)}`;
-      window.open(url, '_blank');
-    }
-
-    // Анимация для категорий и айтемов
-    document.querySelectorAll('.category').forEach((cat, index) => {
-      cat.style.setProperty('--index', index + 1);
-      cat.querySelectorAll('.item').forEach((item, i) => {
-        item.style.setProperty('--item-index', i + 1);
+      .button.secondary {
+        padding: 0.85rem 1.5rem;
+        font-size: 0.9rem;
+        background: #a17f53;
+      }
+      .button.secondary:hover {
+        background: #8b6a43;
+      }
+      .button.cta {
+        padding: 0.8rem 1.4rem;
+        font-size: 0.9rem;
+        background: #25d366;
+        color: #fff;
+        margin-top: 0.8rem;
+        display: inline-block;
+      }
+      .button.cta:hover {
+        background: #20ba58;
+        transform: translateY(-2px);
+      }
+      .menu-item-footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 0.8rem;
+        padding-top: 0.8rem;
+        border-top: 1px solid rgba(17,17,17,.05);
+      }
+      .price {
+        font-weight: 700;
+        font-size: 1.1rem;
+        color: #111;
+      }
+      section {
+        padding: 3rem 0;
+        border-top: 1px solid rgba(17,17,17,.08);
+      }
+      .value-grid {
+        display: grid;
+        gap: 1.5rem;
+        margin-top: 2rem;
+      }
+      .value-item {
+        padding: 1.5rem;
+        background: #fff;
+        border-radius: 1rem;
+        box-shadow: 0 8px 20px rgba(17,17,17,.06);
+        text-align: center;
+      }
+      .value-item h3 {
+        margin: 0 0 0.5rem;
+        font-size: 1.1rem;
+        color: #111;
+      }
+      .value-item p {
+        margin: 0;
+        color: #666;
+        font-size: 0.95rem;
+      }
+      .badge {
+        display: inline-block;
+        background: #25d366;
+        color: #fff;
+        padding: 0.35rem 0.7rem;
+        border-radius: 999px;
+        font-size: 0.8rem;
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+      }
+      .combo-section {
+        background: linear-gradient(135deg, rgba(37,211,102,.08) 0%, rgba(161,127,83,.06) 100%);
+        border-radius: 1.3rem;
+        padding: 2rem;
+        margin: 2rem 0;
+        border: 2px solid #25d366;
+      }
+      .combo-item {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        margin: 0.8rem 0;
+        font-size: 0.95rem;
+      }
+      .combo-item::before {
+        content: "✓";
+        color: #25d366;
+        font-weight: 700;
+        font-size: 1.2rem;
+      }
+      .social-proof {
+        display: grid;
+        gap: 1rem;
+        margin: 2rem 0;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      }
+      .proof-card {
+        background: #fff;
+        padding: 1.3rem;
+        border-radius: 1rem;
+        text-align: center;
+        box-shadow: 0 8px 20px rgba(17,17,17,.06);
+        border-left: 4px solid #25d366;
+      }
+      .proof-card strong {
+        display: block;
+        color: #111;
+        font-size: 1.05rem;
+        margin-bottom: 0.3rem;
+      }
+      .proof-card p {
+        margin: 0;
+        color: #666;
+        font-size: 0.9rem;
+      }
+      .cta-card.final {
+        background: linear-gradient(135deg, #1a1a1a 0%, #111 100%);
+        padding: 3rem 2rem;
+      }
+      .cta-card.final h2 {
+        margin-bottom: 0.8rem;
+        color: #25d366;
+      }
+      .cta-card.final p {
+        margin-bottom: 1.5rem;
+        color: #ccc;
+      }
+      .button.final {
+        padding: 1.3rem 2.5rem;
+        font-size: 1.1rem;
+        background: #25d366;
+        color: #fff;
+        font-weight: 700;
+      }
+      .button.final:hover {
+        background: #20ba58;
+        transform: translateY(-3px);
+      }
+      @media (min-width: 640px) {
+        .menu-grid {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+        .info-grid {
+          grid-template-columns: 1fr 1fr;
+        }
+        .value-grid {
+          grid-template-columns: repeat(3, 1fr);
+        }
+      }
+      .section-title {
+        margin: 0 0 1rem;
+        font-size: 1.25rem;
+        text-transform: uppercase;
+        letter-spacing: 0.18em;
+        color: #7c6246;
+      }
+      .section-heading {
+        margin: 0 0 1.4rem;
+        font-size: clamp(1.8rem, 4vw, 3rem);
+        color: #1a1a1a;
+      }
+      .menu-grid {
+        display: grid;
+        gap: 1rem;
+      }
+      .menu-card,
+      .info-card,
+      .cta-card {
+        background: #fff;
+        border-radius: 1rem;
+        padding: 1.6rem;
+        box-shadow: 0 16px 40px rgba(17,17,17,.08);
+        transition: transform .3s ease, box-shadow .3s ease;
+      }
+      .menu-card:hover,
+      .info-card:hover,
+      .cta-card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 24px 60px rgba(17,17,17,.12);
+      }
+      .menu-item {
+        border-bottom: 1px solid rgba(17,17,17,.08);
+        padding: 1rem 0;
+      }
+      .menu-item:last-child {
+        border-bottom: none;
+      }
+      .menu-item h3 {
+        margin: 0 0 0.35rem;
+        font-size: 1.05rem;
+      }
+      .menu-item p {
+        margin: 0 0 0.65rem;
+        color: #555;
+      }
+      .menu-item span {
+        font-weight: 700;
+      }
+      .text-block {
+        max-width: 34rem;
+        color: #4e4e4e;
+        font-size: 1rem;
+      }
+      .info-grid {
+        display: grid;
+        gap: 1rem;
+      }
+      .map-placeholder {
+        min-height: 220px;
+        border-radius: 1rem;
+        background: linear-gradient(135deg, #f5f1eb 0%, #e9dfd5 100%);
+        display: grid;
+        place-items: center;
+        color: #7d6b58;
+        font-weight: 600;
+      }
+      .contact-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+      .contact-list li {
+        margin-bottom: 0.95rem;
+        font-weight: 500;
+        color: #333;
+      }
+      .contact-list a {
+        color: #111;
+      }
+      .cta-card {
+        background: #111;
+        color: #fff;
+        border-radius: 1.3rem;
+        padding: 2rem 1.5rem;
+        text-align: center;
+      }
+      .cta-card h2 {
+        margin: 0 0 1rem;
+        font-size: clamp(1.8rem, 4vw, 2.6rem);
+      }
+      .cta-card p {
+        margin: 0;
+        opacity: .85;
+      }
+      footer {
+        padding: 2rem 0 3rem;
+        color: #666;
+        font-size: 0.95rem;
+        text-align: center;
+      }
+      .animate-on-scroll {
+        opacity: 0;
+        transform: translateY(24px);
+        transition: opacity .7s ease, transform .7s ease;
+      }
+      .animate-on-scroll.animate {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      @media (min-width: 640px) {
+        .menu-grid {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+        .info-grid {
+          grid-template-columns: 1fr 1fr;
+        }
+      }
+      @media (min-width: 900px) {
+        nav {
+          justify-content: flex-end;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="container animate-on-scroll">
+      <nav>
+        <a href="#menu">Меню</a>
+        <a href="#about">О нас</a>
+        <a href="#location">Где мы</a>
+        <a href="#contact">Контакты</a>
+      </nav>
+    </header>
+    <main class="container">
+      <section class="hero animate-on-scroll" id="top">
+        <div class="eyebrow">Ваше заведение</div>
+        <h1>Быстрое обслуживание. Высокое качество. Удобный заказ по QR.</h1>
+        <p class="tagline">Современное кафе для мобильных гостей: свежие блюда, премиальный кофе и приятная атмосфера.</p>
+        <a class="button" href="#menu">Посмотреть меню</a>
+      </section>
+      <section id="menu" class="animate-on-scroll">
+        <p class="section-title">Меню</p>
+        <h2 class="section-heading">Отобранные блюда, готовые к заказу.</h2>
+        <div class="menu-grid">
+          <article class="menu-card animate-on-scroll">
+            <div class="menu-item">
+              <h3>Классический бургер</h3>
+              <p>Сочная говяжья котлета, плавленый сыр, хрустящий салат и фирменный соус.</p>
+              <span>₽890</span>
+            </div>
+            <div class="menu-item">
+              <h3>Бургер с авокадо</h3>
+              <p>Гриль-курица, кремовое авокадо, помидор и травяной соус.</p>
+              <span>₽990</span>
+            </div>
+          </article>
+          <article class="menu-card animate-on-scroll">
+            <div class="menu-item">
+              <h3>Пицца Маргарита</h3>
+              <p>Тонкая корочка, томаты, свежая моцарелла и ароматный базилик.</p>
+              <span>₽1190</span>
+            </div>
+            <div class="menu-item">
+              <h3>Острая пепперони</h3>
+              <p>Ручная раскатка, пикантная пепперони и оливковое масло.</p>
+              <span>₽1290</span> 
+            </div>
+          </article>
+          <article class="menu-card animate-on-scroll">
+            <div class="menu-item">
+              <h3>Cold Brew</h3>
+              <p>Мягкий насыщенный кофе на холодной заварке для чистого вкуса.</p>
+              <span>₽350</span>
+            </div>
+            <div class="menu-item">
+              <h3>Матча латте</h3>
+              <p>Пышная матча с нежным молоком и лёгкой медовой сладостью.</p>
+              <span>₽420</span>
+            </div>
+            <div class="menu-item">
+              <h3>Авторский лимонад</h3>
+              <p>Свежие цитрусы, домашний сироп и лёгкая газировка.</p>
+              <span>₽330</span>
+            </div>
+          </article>
+        </div>
+      </section>
+      <section id="about" class="animate-on-scroll">
+        <p class="section-title">О нас</p>
+        <h2 class="section-heading">Премиальный локальный кофе с тёплым приёмом.</h2>
+        <p class="text-block">Мы создаём комфортную атмосферу и обеспечиваем быстрое обслуживание, чтобы гости уходили довольными.</p>
+      </section>
+      <section id="location" class="animate-on-scroll">
+        <p class="section-title">Где мы</p>
+        <h2 class="section-heading">Нас легко найти.</h2>
+        <div class="info-grid">
+          <div class="info-card animate-on-scroll">
+            <h3>ул. Главная, 123</h3>
+            <p>В центре города, удобно для быстрого перекуса или спокойного кофе-брейка.</p>
+          </div>
+          <div class="info-card map-placeholder animate-on-scroll">Здесь может быть карта</div>
+        </div>
+      </section>
+      <section id="contact" class="animate-on-scroll">
+        <p class="section-title">Контакты</p>
+        <h2 class="section-heading">Свяжитесь с нами или заказывайте прямо.</h2>
+        <div class="info-grid">
+          <div class="info-card animate-on-scroll">
+            <ul class="contact-list">
+              <li>Телефон: <a href="tel:+1234567890">+1 (234) 567-890</a></li>
+              <li>Instagram: <a href="https://instagram.com/yourbusiness" target="_blank" rel="noreferrer">@yourbusiness</a></li>
+              <li><a href="https://wa.me/1234567890" target="_blank" rel="noreferrer">Написать в WhatsApp</a></li>
+            </ul>
+          </div>
+          <div class="info-card animate-on-scroll">
+            <p class="text-block">Сканируйте QR-код или используйте быструю ссылку, чтобы открыть меню на телефоне.</p>
+          </div>
+        </div>
+      </section>
+      <section id="qr" class="animate-on-scroll">
+        <div class="cta-card animate-on-scroll">
+          <h2>Сканируйте QR и получите меню мгновенно</h2>
+          <p>Удобный заказ для занятых гостей. Экономьте время и наслаждайтесь сервисом.</p>
+        </div>
+      </section>
+    </main>
+    <footer class="container animate-on-scroll">
+      <p>&copy; 2026 Ваше заведение. Стильно, удобно и готово для местных гостей.</p>
+    </footer>
+    <script>
+      const elements = document.querySelectorAll('.animate-on-scroll');
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('animate');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.15 });
+      elements.forEach(el => observer.observe(el));
+      document.querySelectorAll('a[href^="#"]').forEach(link => {
+        link.addEventListener('click', (event) => {
+          if (link.getAttribute('href') === '#') return;
+          event.preventDefault();
+          const target = document.querySelector(link.getAttribute('href'));
+          if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        });
       });
-    });
-
-    // Функции для модального окна
-    function openModal(src) {
-      const modal = document.getElementById('myModal');
-      const modalImg = document.getElementById('modalImg');
-      modal.style.display = 'flex';
-      modalImg.src = src;
-    }
-
-    function closeModal() {
-      document.getElementById('myModal').style.display = 'none';
-    }
-
-    // Закрытие по клику вне фото
-    window.onclick = function(event) {
-      const modal = document.getElementById('myModal');
-      if (event.target === modal) {
-        closeModal();
-      }
-    }
-  </script>
-</body>
+    </script>
+  </body>
 </html>
